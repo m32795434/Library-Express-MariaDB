@@ -8,3 +8,18 @@ h1{
 a {
   color: #00B7FF;
 }
+
+.nav{
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-item{
+display: flex;
+flex-grow: 1;
+}
+.nav-item-link{
+  align-self: center;
+}
