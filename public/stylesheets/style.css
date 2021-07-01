@@ -10,16 +10,17 @@ a {
 }
 
 .nav{
+  background-color: rgb(56, 188, 240);
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 20px;
 }
 .nav-item{
-display: flex;
 flex-grow: 1;
+text-align: center;
 }
 .nav-item-link{
-  align-self: center;
+  color: antiquewhite;
 }
