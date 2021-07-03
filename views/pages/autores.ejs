@@ -11,5 +11,19 @@
 <body>
     <h1>estas en autores</h1>
     <%- include('../partials/nav')%>
+    <hr>
+    <h1><%= titulo %></h1>
+    <ul>
+        <% autores.forEach(auto => {
+            %> <li>Autor ID: <%=auto.id%> Nombre: <%=auto.nombreCompleto%>
+            <ul>
+                <% libros.forEach(libro => {
+                    %> <li>Título: <%=libro.titulo%> 
+                    </li> 
+                <% }) %>
+            </ul>
+                </li>
+        <% }) %>
+    </ul>
 </body>
 </html>
