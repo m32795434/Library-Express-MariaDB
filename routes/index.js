@@ -9,6 +9,11 @@ router.get('/', (req, res) =>{
   //res.send(books); //muestro los books en navegador
 });
 
+router.get('/search', async (req, res) =>{
+// Los datos de la URL vienen en req.query
+const book = await api.findBookByTitle(req.query.zapato);   
+res.send(book); 
+});
 router.get('/books', async (req, res) =>{
   const libros = await api.getLibros();
   const titulo = 'List of books'
@@ -19,8 +24,7 @@ router.get('/book/:id', async (req, res) => {
   //":" PARAMS
   // Los datos de la URL vienen en req.params, por lo que tomamos el parámetro ID del request
   const libro = await api.getBookById(req.params.id);
-  //res.render('pages/book', { libro });
-  res.send(libro);
+  res.render('pages/book', { libro });
 });
 
 router.get('/authors', async (req, res) =>{

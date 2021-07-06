@@ -4,19 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUTHORS</title>
+    <title>SEARCH</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     
 </head>
 <body>
-    <h1><%=titulo%></h1>
-    <hr>
+    
     <%- include('../partials/nav')%>
-    <ul>
-        <% autores.forEach(auto => {
-            %> <li>Author ID: <%= auto.id %> Name: <%= auto.nombreCompleto %>
-            </li>
-        <% }) %>
-    </ul>
+    
 </body>
 </html>

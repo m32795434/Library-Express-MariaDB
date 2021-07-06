@@ -1,3 +1,5 @@
+//traigo los operadores de sequelize
+const {Op} = require('sequelize');
 // Traemos los modelos
 const db = require('../models');
 //findAll a través de sequalize se convierte en un SELECT *
@@ -24,12 +26,25 @@ const getAutores = async () => {
          .then(result => {
              return result;
          });
-
     return autores;
 }
 
+//recibo lo que el usuario cargó en la busqueda.Es la query de la URL.
+const findBookByTitle = async (cococha) => {
+const books = await db.libro.findAll({
+    where:{
+        titulo:{
+//[Op.substring] = LIKE '%dato%' 
+            [Op.substring]: cococha
+        }
+    }, include:db.autor
+}).then(result =>{
+    return result;
+});
+    return books;
+}
 module.exports = {
-    getLibros, getAutores,getBookById
+    getLibros, getAutores,getBookById,findBookByTitle
 }
 
 
