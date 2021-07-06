@@ -9,10 +9,17 @@ router.get('/', (req, res) =>{
   //res.send(books); //muestro los books en navegador
 });
 
+router.get('/add', async (req, res) =>{
+  //const libros = await api.findBookByTitle(req.query.zapato);
+  const titulo = 'Add'
+  res.render('pages/add', { titulo });    
+  });
+
 router.get('/search', async (req, res) =>{
 // Los datos de la URL vienen en req.query
-const book = await api.findBookByTitle(req.query.zapato);   
-res.send(book); 
+const libros = await api.findBookByTitle(req.query.zapato);
+const titulo = 'Query of books'
+res.render('pages/books', { libros, titulo });    
 });
 router.get('/books', async (req, res) =>{
   const libros = await api.getLibros();
