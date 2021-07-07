@@ -12,5 +12,30 @@
         <%- include('../partials/nav')%>
         <hr>
         <h1>You are <%=titulo%>ing a book</h1>
+        <form action="add_process" method="POST">
+            <label>
+                Title:
+                <input type="text" name="title">
+            </label>
+            <label>
+                Price:
+                <input type="number" min="1" name="price">
+            </label>
+            <label>
+                Author:
+                <select name="author">
+                    
+                    <% autores.forEach(auto => {
+                        %> <option value=" <%= auto.id %> "><%= auto.nombreCompleto %> </option>
+                    <% }) %>
+
+                </select>
+            </label>
+            <label>
+                Cover:
+                <input type="text" name="cover">
+            </label>
+            <input type="submit" value="Add book">
+        </form>
 </body>
 </html>

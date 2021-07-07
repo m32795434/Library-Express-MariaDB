@@ -30,12 +30,12 @@ const getAutores = async () => {
 }
 
 //recibo lo que el usuario cargó en la busqueda.Es la query de la URL.
-const findBookByTitle = async (cococha) => {
+const findBookByTitle = async (qq) => {
 const books = await db.libro.findAll({
     where:{
         titulo:{
 //[Op.substring] = LIKE '%dato%' 
-            [Op.substring]: cococha
+            [Op.substring]: qq
         }
     }, include:db.autor
 }).then(result =>{
@@ -43,8 +43,19 @@ const books = await db.libro.findAll({
 });
     return books;
 }
+
+const addBook = async (titulo, precio, autorId, portada) => {
+const book = await db.libro.create({
+    titulo,
+    precio,
+    portada,
+    autorId
+});
+
+return book;
+}
 module.exports = {
-    getLibros, getAutores,getBookById,findBookByTitle
+    getLibros, getAutores,getBookById,findBookByTitle,addBook
 }
 
 
