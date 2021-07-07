@@ -10,18 +10,17 @@ router.get('/', (req, res) =>{
 });
 
 router.get('/add', async (req, res) =>{
-  
-  const titulo = 'Add'
-  //conseguir el listado de autores y pasarlo al render
-  const autores = await api.getAutores();
-  res.render('pages/add', { titulo, autores });    
-  });
+const titulo = 'Add'
+//conseguir el listado de autores y pasarlo al render
+const autores = await api.getAutores();
+res.render('pages/add', { titulo, autores });    
+});
 
-  router.post('/add_process', async (req, res) =>{
-    const {title, price, author, cover} = req.body;
-    const book = api.addBook(title, price, author, cover);
-    res.send(book);  
-  });
+router.post('/add_process', async (req, res) =>{
+  const {title, price, author, cover} = await req.body;
+  const book = await api.addBook(title, price, author, cover);
+  res.send(book);  
+});
 
 router.get('/search', async (req, res) =>{
 // Los datos de la URL vienen en req.query
@@ -29,6 +28,7 @@ const libros = await api.findBookByTitle(req.query.q);
 const titulo = 'Search your book'
 res.render('pages/books', { libros, titulo });    
 });
+
 router.get('/books', async (req, res) =>{
   const libros = await api.getLibros();
   const titulo = 'List of books'
@@ -44,10 +44,10 @@ router.get('/book/:id', async (req, res) => {
 
 router.get('/authors', async (req, res) =>{
   const autores = await api.getAutores();
-  const titulo = 'The list of authors'
-  res.render('pages/authors', {autores,titulo});
-  
-});
+  const libros = await api.getLibros();
+  const titulo = 'List of authors and their books'
+    res.render('pages/authors', {autores,titulo, libros});
+  });
 
 router.get ('/contact', (req, res) => {
   res.render('pages/contact');

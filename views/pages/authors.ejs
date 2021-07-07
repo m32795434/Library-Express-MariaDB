@@ -13,10 +13,20 @@
     <hr>
     <%- include('../partials/nav')%>
     <ul>
-        <% autores.forEach(auto => {
-            %> <li>Author ID: <%= auto.id %> Name: <%= auto.nombreCompleto %>
-            </li>
+        <% autores.forEach(autor => { %> 
+          <li>
+            <%= autor.nombreCompleto %>
+              <ul>
+                <% libros.forEach(libro =>{ %>
+                  <% if(libro.autorId === autor.id) { %>
+                    <li>
+                      <%= libro.titulo %>
+                    </li>
+                  <% } %>
+                <% }) %>
+              </ul>
+          </li>
         <% }) %>
-    </ul>
+      </ul>
 </body>
 </html>

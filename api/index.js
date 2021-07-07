@@ -50,8 +50,9 @@ const book = await db.libro.create({
     precio,
     portada,
     autorId
+}).then(result =>{
+    return result;
 });
-
 return book;
 }
 module.exports = {
