@@ -13,15 +13,15 @@ router.get('/add', async (req, res) =>{
 const titulo = 'Add'
 //conseguir el listado de autores y pasarlo al render
 const autores = await api.getAutores();
-res.render('pages/add', { titulo, autores });    
+res.render('pages/add', { titulo, autores,});    
 });
 
 router.post('/add_process', async (req, res) =>{
   const {title, price, author, cover} = await req.body;
   const book = await api.addBook(title, price, author, cover);
-  res.send(book);  
+  console.log(book);  
 });
-
+//en esta ruta, tomo los datos ingresados en el buscador del nav. Renderizo sobre la misma pagina books.
 router.get('/search', async (req, res) =>{
 // Los datos de la URL vienen en req.query
 const libros = await api.findBookByTitle(req.query.q);
@@ -31,10 +31,11 @@ res.render('pages/books', { libros, titulo });
 
 router.get('/books', async (req, res) =>{
   const libros = await api.getLibros();
-  const titulo = 'List of books'
+  const titulo = 'List of books and their authors'
   res.render('pages/books', { libros, titulo });
 });
 //seguimos con SELECT, así que seguimos en confianza con GET.
+//recupero la info que me brinda el link en las listas de "book.ejs"; (id del libro)
 router.get('/book/:id', async (req, res) => {
   //":" PARAMS
   // Los datos de la URL vienen en req.params, por lo que tomamos el parámetro ID del request

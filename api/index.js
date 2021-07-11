@@ -4,7 +4,7 @@ const {Op} = require('sequelize');
 const db = require('../models');
 //findAll a través de sequalize se convierte en un SELECT *
 const getLibros = async () => {
-    const libros = await db.libro.findAll({include: db.autor.id})//exporto solo adicional el "id del autor", no todos los datos
+    const libros = await db.libro.findAll({include: db.autor})
         .then(result => {
             return result;
         });

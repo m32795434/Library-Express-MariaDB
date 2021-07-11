@@ -19,6 +19,9 @@
 <!-- hacemos que el link con el que viajen, contenga ID libro  -->
                 <a href="book/<%= book.id %>"> 
                     <%= book.titulo %>
+                </a> - 
+                <a href="#"> 
+                    <%= book.autor.nombreCompleto %>
                 </a>
             </li>
         <% }) %>
