@@ -18,14 +18,16 @@ res.render('pages/add', { titulo, autores,});
 
 router.post('/add_process', async (req, res) =>{
   const {title, price, author, cover} = await req.body;
-  const book = await api.addBook(title, price, author, cover);
-  console.log(book);  
+  await api.addBook(title, price, author, cover);
+  const libros = await api.getLibros();
+  const titulo = 'List of books and their authors'
+  res.render('pages/books', { libros, titulo });  
 });
 //en esta ruta, tomo los datos ingresados en el buscador del nav. Renderizo sobre la misma pagina books.
 router.get('/search', async (req, res) =>{
 // Los datos de la URL vienen en req.query
 const libros = await api.findBookByTitle(req.query.q);
-const titulo = 'Search your book'
+const titulo = 'Your Search'
 res.render('pages/books', { libros, titulo });    
 });
 
@@ -41,6 +43,19 @@ router.get('/book/:id', async (req, res) => {
   // Los datos de la URL vienen en req.params, por lo que tomamos el parámetro ID del request
   const libro = await api.getBookById(req.params.id);
   res.render('pages/book', { libro });
+});
+
+router.get('/delete-book/:id', async (req, res) => {
+  //":" PARAMS
+  // Los datos de la URL vienen en req.params, por lo que tomamos el parámetro ID del request
+  const affectedRows = await api.deleteBookByID(req.params.id);
+  if (affectedRows > 0){
+    const libros = await api.getLibros();
+    const titulo = 'List of books and their authors'
+    res.render('pages/books', { libros, titulo });
+  }else{
+res.send(`Something went rong`)
+  }
 });
 
 router.get('/authors', async (req, res) =>{

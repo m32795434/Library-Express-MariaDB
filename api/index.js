@@ -20,7 +20,22 @@ const getBookById = async (id) => {
         });
 
     return book;
+
 }
+const deleteBookByID = async (Id) => {
+// es muy probable exista una funcion llamada deleteByPK, buscar en sequelize
+// book: nos devulve la cantidad de filas eliminadas. NO UN JSON CON DATA DEL LIBRO
+        const book = await db.libro.destroy({
+            where: {
+                id:Id
+            }
+        }).then(result => {
+            return result;
+        });
+
+    return book;
+}
+
 const getAutores = async () => {
     const autores = await db.autor.findAll({include: db.libro})
          .then(result => {
@@ -56,7 +71,7 @@ const book = await db.libro.create({
 return book;
 }
 module.exports = {
-    getLibros, getAutores,getBookById,findBookByTitle,addBook
+    getLibros, getAutores,getBookById,findBookByTitle,addBook,deleteBookByID
 }
 
 

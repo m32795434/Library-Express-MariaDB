@@ -22,6 +22,9 @@
                 </a> - 
                 <a href="#"> 
                     <%= book.autor.nombreCompleto %>
+                </a> -
+                <a href="delete-book/<%= book.id %>"> 
+                    DELETE
                 </a>
             </li>
         <% }) %>
