@@ -15,7 +15,7 @@ const titulo = 'Add'
 const autores = await api.getAutores();
 res.render('pages/add', { titulo, autores,});    
 });
-
+//cargo un libro y muestro la librería completa
 router.post('/add_process', async (req, res) =>{
   const {title, price, author, cover} = await req.body;
   await api.addBook(title, price, author, cover);
@@ -50,12 +50,12 @@ router.get('/delete-book/:id', async (req, res) => {
   // Los datos de la URL vienen en req.params, por lo que tomamos el parámetro ID del request
   const affectedRows = await api.deleteBookByID(req.params.id);
   if (affectedRows > 0){
-    const libros = await api.getLibros();
-    const titulo = 'List of books and their authors'
-    res.render('pages/books', { libros, titulo });
-  }else{
-res.send(`Something went rong`)
-  }
+//hago un redirect al listado de libros completos así funciona el F5, y no trata de volver a ingresar a la ruta ejemplo:"/delete-book/15"
+//http://expressjs.com/en/5x/api.html#res.redirect    
+    res.redirect('/books');
+      }else{
+    res.send(`Something went rong`)
+      }
 });
 
 router.get('/authors', async (req, res) =>{
