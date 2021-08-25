@@ -1,28 +1,34 @@
 var express = require('express');
 var router = express.Router();
-const api = require('../api');//como es index.js a quien busco, no necesito especificarlo
+
+//como es index.js a quien busco, no necesito especificarlo
+// Traemos todas las funciones de DB en "api"
+const api = require('../api');
 
 /* GET home page. */
 router.get('/', (req, res) =>{
-  //const books = await api.getBooks();
-  res.render('index', { title: 'gatitos'});
-  //res.send(books); //muestro los books en navegador
+  res.render('index', { title: 'Librería'});
 });
 
 router.get('/add', async (req, res) =>{
 const titulo = 'Add'
-//conseguir el listado de autores y pasarlo al render
+//conseguir el listado de autores para el Form
 const autores = await api.getAutores();
 res.render('pages/add', { titulo, autores,});    
 });
+
+//utilizo POST para que el formulario envie los datos
 //cargo un libro y muestro la librería completa
 router.post('/add_process', async (req, res) =>{
-  const {title, price, author, cover} = await req.body;
+  // Data MDN: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+  const {title, price, author, cover} = await req.body; 
   await api.addBook(title, price, author, cover);
   const libros = await api.getLibros();
   const titulo = 'List of books and their authors'
+  //renderiza, reutilizando la pagina pages/books
   res.render('pages/books', { libros, titulo });  
 });
+
 //en esta ruta, tomo los datos ingresados en el buscador del nav. Renderizo sobre la misma pagina books.
 router.get('/search', async (req, res) =>{
 // Los datos de la URL vienen en req.query
@@ -45,10 +51,12 @@ router.get('/book/:id', async (req, res) => {
   res.render('pages/book', { libro });
 });
 
+
 router.get('/delete-book/:id', async (req, res) => {
   //":" PARAMS
   // Los datos de la URL vienen en req.params, por lo que tomamos el parámetro ID del request
   const affectedRows = await api.deleteBookByID(req.params.id);
+  // La respuesta de la query de SQL es la cantidad de filas afectadas
   if (affectedRows > 0){
 //hago un redirect al listado de libros completos así funciona el F5, y no trata de volver a ingresar a la ruta ejemplo:"/delete-book/15"
 //http://expressjs.com/en/5x/api.html#res.redirect    

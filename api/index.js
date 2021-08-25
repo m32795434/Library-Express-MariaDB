@@ -2,6 +2,7 @@
 const {Op} = require('sequelize');
 // Traemos los modelos
 const db = require('../models');
+
 //findAll a través de sequalize se convierte en un SELECT *
 const getLibros = async () => {
     const libros = await db.libro.findAll({include: db.autor})
@@ -24,7 +25,6 @@ const getBookById = async (id) => {
 }
 const deleteBookByID = async (Id) => {
 // es muy probable exista una funcion llamada deleteByPK, buscar en sequelize
-// book: nos devulve la cantidad de filas eliminadas. NO UN JSON CON DATA DEL LIBRO
         const book = await db.libro.destroy({
             where: {
                 id:Id
@@ -32,7 +32,7 @@ const deleteBookByID = async (Id) => {
         }).then(result => {
             return result;
         });
-
+// book: nos devulve la cantidad de filas eliminadas. NO UN JSON CON DATA DEL LIBRO
     return book;
 }
 
@@ -46,32 +46,40 @@ const getAutores = async () => {
 
 //recibo lo que el usuario cargó en la busqueda.Es la query de la URL.
 const findBookByTitle = async (qq) => {
-const books = await db.libro.findAll({
-    where:{
-        titulo:{
-//[Op.substring] = LIKE '%dato%' 
-            [Op.substring]: qq
-        }
-    }, include:db.autor
-}).then(result =>{
-    return result;
-});
-    return books;
+    const books = await db.libro.findAll({
+        where:{
+            titulo:{
+                //[Op.substring] = LIKE '%dato%' 
+                [Op.substring]: qq
+            }
+        }, 
+        include:db.autor
+    })
+    .then(result =>{
+        return result;
+    });
+        return books;
 }
 
 const addBook = async (titulo, precio, autorId, portada) => {
-const book = await db.libro.create({
+    // En el create respetamos los nombres y el orden de las columnas de la tabla libro
+    const book = await db.libro.create({
     titulo,
     precio,
     portada,
     autorId
-}).then(result =>{
-    return result;
-});
-return book;
+    }).then(result =>{
+        return result;
+    });
+    return book;
 }
 module.exports = {
-    getLibros, getAutores,getBookById,findBookByTitle,addBook,deleteBookByID
+    getLibros, 
+    getAutores,
+    getBookById,
+    findBookByTitle,
+    addBook,
+    deleteBookByID
 }
 
 
